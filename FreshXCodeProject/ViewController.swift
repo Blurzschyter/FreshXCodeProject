@@ -7,6 +7,8 @@
 
 import UIKit
 
+private let customCellReuseIdentifier = "customCell"
+
 class ViewController: UIViewController {
 
     @IBOutlet weak var myTableView: UITableView!
@@ -20,6 +22,8 @@ class ViewController: UIViewController {
         self.myTableView.delegate = self
         
         print("test 123...")
+        
+        self.myTableView.register(UINib(nibName: "CustomCell", bundle: nil), forCellReuseIdentifier: customCellReuseIdentifier)
     }
 
 }
@@ -39,9 +43,14 @@ extension ViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = self.myTableView.dequeueReusableCell(withIdentifier: "myCell", for: indexPath)
-        cell.textLabel?.text = self.sentences[indexPath.row]
-        return cell
+        //let cell = self.myTableView.dequeueReusableCell(withIdentifier: "myCell", for: indexPath)
+        //cell.textLabel?.text = self.sentences[indexPath.row]
+        //return cell
+        
+        let customCell = self.myTableView.dequeueReusableCell(withIdentifier: customCellReuseIdentifier, for: indexPath) as! CustomCell
+        customCell.lblSentence.text = self.sentences[indexPath.row]
+        return customCell
+        
     }
     
 }
